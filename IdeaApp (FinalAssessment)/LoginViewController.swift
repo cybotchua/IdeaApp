@@ -7,25 +7,12 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl! {
-        didSet {
-            let attr = NSDictionary(object: UIFont(name: "HelveticaNeue-Bold", size: 20.0)!, forKey: NSAttributedStringKey.font as NSCopying)
-            segmentedControl.setTitleTextAttributes(attr as [NSObject : AnyObject] , for: .normal)
-        }
-    }
-    
-    @IBOutlet weak var iconImageView: UIImageView! {
-        didSet {
-            iconImageView.layer.borderWidth = 1.0
-            iconImageView.layer.masksToBounds = false
-            iconImageView.layer.borderColor = UIColor.white.cgColor
-            iconImageView.layer.cornerRadius = iconImageView.frame.size.width / 2
-            iconImageView.clipsToBounds = true
-        }
-    }
+//--------------------------------Outlets------------------------------------------------//
     
     @IBOutlet weak var shadowView: UIView! {
         didSet {
@@ -58,15 +45,51 @@ class LoginViewController: UIViewController {
             loginButton.layer.shadowOpacity = 0.5
             loginButton.layer.shadowOffset = CGSize(width: 1, height: 1)
             loginButton.layer.shadowRadius = 5
+            
+            loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         }
     }
     
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var createOneNowButton: UIButton!
+    
+    //--------------------------------Global Variables-------------------------------------------//
+
+    var ref : DatabaseReference!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ref = Database.database().reference()
+        
+    }
+    
+    //--------------------------------Functions------------------------------------------------//
+    
+    @objc func loginButtonTapped() {
+        guard let email = emailTextField.text,
+            let password = passwordTextField.text else {return}
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if let validError = error {
+                self.showAlert(withTitle: "ERROR", message: validError.localizedDescription)
+            }
+            
+            if user != nil {
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
+                
+                guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController else {return}
+                
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
     }
 
-
 }
+
+
