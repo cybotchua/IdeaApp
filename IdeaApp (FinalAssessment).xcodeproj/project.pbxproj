@@ -11,12 +11,18 @@
 		000894FB2061EADB00FA179E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000894FA2061EADB00FA179E /* Assets.xcassets */; };
 		000894FE2061EADB00FA179E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 000894FC2061EADB00FA179E /* LaunchScreen.storyboard */; };
 		000895062061EBFD00FA179E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 000895052061EBFD00FA179E /* GoogleService-Info.plist */; };
-		000895082061F05A00FA179E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000895072061F05A00FA179E /* LoginViewController.swift */; };
 		0008950A2061F19500FA179E /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000895092061F19500FA179E /* InitialViewController.swift */; };
 		0008950C206215A100FA179E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008950B206215A100FA179E /* Extension.swift */; };
 		0008950E206216E600FA179E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008950D206216E600FA179E /* SignUpViewController.swift */; };
 		00089511206221E700FA179E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 000894F72061EADB00FA179E /* Main.storyboard */; };
-		00089512206222A100FA179E /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008950F2062204500FA179E /* MasterViewController.swift */; };
+		00089512206222A100FA179E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008950F2062204500FA179E /* LoginViewController.swift */; };
+		0008951720636F2D00FA179E /* IdeaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008951620636F2D00FA179E /* IdeaViewController.swift */; };
+		0008951D20636FF000FA179E /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008951C20636FF000FA179E /* AddViewController.swift */; };
+		0008951F20636FF800FA179E /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008951E20636FF800FA179E /* ExploreViewController.swift */; };
+		000895212063700000FA179E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000895202063700000FA179E /* ProfileViewController.swift */; };
+		000895232063702F00FA179E /* IdeaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000895222063702F00FA179E /* IdeaTableViewCell.swift */; };
+		000895252063729400FA179E /* Idea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000895242063729400FA179E /* Idea.swift */; };
+		00089527206373B600FA179E /* IdeaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00089526206373B600FA179E /* IdeaDetailViewController.swift */; };
 		FC2A0712FB0BF16D344B4EBA /* Pods_IdeaApp__FinalAssessment_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,11 +34,17 @@
 		000894FD2061EADB00FA179E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		000894FF2061EADB00FA179E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		000895052061EBFD00FA179E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		000895072061F05A00FA179E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		000895092061F19500FA179E /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		0008950B206215A100FA179E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0008950D206216E600FA179E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		0008950F2062204500FA179E /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		0008950F2062204500FA179E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0008951620636F2D00FA179E /* IdeaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaViewController.swift; sourceTree = "<group>"; };
+		0008951C20636FF000FA179E /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		0008951E20636FF800FA179E /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		000895202063700000FA179E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		000895222063702F00FA179E /* IdeaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaTableViewCell.swift; sourceTree = "<group>"; };
+		000895242063729400FA179E /* Idea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Idea.swift; sourceTree = "<group>"; };
+		00089526206373B600FA179E /* IdeaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaDetailViewController.swift; sourceTree = "<group>"; };
 		05F01074C114670F2347F176 /* Pods-IdeaApp (FinalAssessment).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).debug.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).debug.xcconfig"; sourceTree = "<group>"; };
 		497EA11F04F6B7200B8741BC /* Pods-IdeaApp (FinalAssessment).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).release.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).release.xcconfig"; sourceTree = "<group>"; };
 		7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdeaApp__FinalAssessment_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,16 +86,62 @@
 				000894F32061EADB00FA179E /* AppDelegate.swift */,
 				0008950B206215A100FA179E /* Extension.swift */,
 				000894F72061EADB00FA179E /* Main.storyboard */,
-				000895092061F19500FA179E /* InitialViewController.swift */,
-				0008950F2062204500FA179E /* MasterViewController.swift */,
-				000895072061F05A00FA179E /* LoginViewController.swift */,
-				0008950D206216E600FA179E /* SignUpViewController.swift */,
+				0008951420636EEF00FA179E /* LoginAndSignUp */,
+				0008951520636F0F00FA179E /* Idea */,
+				0008951A20636F5200FA179E /* Add */,
+				0008951820636F3C00FA179E /* Explore */,
+				0008951B20636F7E00FA179E /* Profile */,
 				000894FA2061EADB00FA179E /* Assets.xcassets */,
 				000894FC2061EADB00FA179E /* LaunchScreen.storyboard */,
 				000894FF2061EADB00FA179E /* Info.plist */,
 				000895052061EBFD00FA179E /* GoogleService-Info.plist */,
 			);
 			path = "IdeaApp (FinalAssessment)";
+			sourceTree = "<group>";
+		};
+		0008951420636EEF00FA179E /* LoginAndSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				000895092061F19500FA179E /* InitialViewController.swift */,
+				0008950F2062204500FA179E /* LoginViewController.swift */,
+				0008950D206216E600FA179E /* SignUpViewController.swift */,
+			);
+			path = LoginAndSignUp;
+			sourceTree = "<group>";
+		};
+		0008951520636F0F00FA179E /* Idea */ = {
+			isa = PBXGroup;
+			children = (
+				0008951620636F2D00FA179E /* IdeaViewController.swift */,
+				00089526206373B600FA179E /* IdeaDetailViewController.swift */,
+				000895222063702F00FA179E /* IdeaTableViewCell.swift */,
+				000895242063729400FA179E /* Idea.swift */,
+			);
+			path = Idea;
+			sourceTree = "<group>";
+		};
+		0008951820636F3C00FA179E /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				0008951E20636FF800FA179E /* ExploreViewController.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		0008951A20636F5200FA179E /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				0008951C20636FF000FA179E /* AddViewController.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		0008951B20636F7E00FA179E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				000895202063700000FA179E /* ProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		28C1EE798F5A41CA7B5DD372 /* Frameworks */ = {
@@ -240,10 +298,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0008950A2061F19500FA179E /* InitialViewController.swift in Sources */,
-				000895082061F05A00FA179E /* LoginViewController.swift in Sources */,
-				00089512206222A100FA179E /* MasterViewController.swift in Sources */,
+				0008951720636F2D00FA179E /* IdeaViewController.swift in Sources */,
+				000895232063702F00FA179E /* IdeaTableViewCell.swift in Sources */,
+				000895252063729400FA179E /* Idea.swift in Sources */,
+				0008951D20636FF000FA179E /* AddViewController.swift in Sources */,
+				00089512206222A100FA179E /* LoginViewController.swift in Sources */,
+				0008951F20636FF800FA179E /* ExploreViewController.swift in Sources */,
 				000894F42061EADB00FA179E /* AppDelegate.swift in Sources */,
+				000895212063700000FA179E /* ProfileViewController.swift in Sources */,
 				0008950C206215A100FA179E /* Extension.swift in Sources */,
+				00089527206373B600FA179E /* IdeaDetailViewController.swift in Sources */,
 				0008950E206216E600FA179E /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

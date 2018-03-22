@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class InitialViewController: UIViewController {
 
@@ -20,9 +21,18 @@ class InitialViewController: UIViewController {
     @objc func goToMainScreen() {
         timer.invalidate()
         
-        guard let vc = storyboard?.instantiateViewController(withIdentifier: "navigationController") as? UINavigationController else {return}
+        if Auth.auth().currentUser != nil {
+            
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController else {return}
+            
+            present(vc, animated: true, completion: nil)
+        } else {
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "navigationController") as? UINavigationController else {return}
+            
+            present(vc, animated: true, completion: nil)
+        }
         
-        present(vc, animated: true, completion: nil)
+        
     }
 
 }

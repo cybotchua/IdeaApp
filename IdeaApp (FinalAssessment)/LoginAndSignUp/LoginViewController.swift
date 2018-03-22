@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  MasterViewController.swift
 //  IdeaApp (FinalAssessment)
 //
 //  Created by Terence Chua on 21/03/2018.
@@ -12,7 +12,17 @@ import FirebaseDatabase
 
 class LoginViewController: UIViewController {
     
-//--------------------------------Outlets------------------------------------------------//
+    //--------------------------------Outlets------------------------------------------------//
+    
+    @IBOutlet weak var iconImageView: UIImageView! {
+        didSet {
+            iconImageView.layer.borderWidth = 1.0
+            iconImageView.layer.masksToBounds = false
+            iconImageView.layer.borderColor = UIColor.white.cgColor
+            iconImageView.layer.cornerRadius = iconImageView.frame.size.width / 2
+            iconImageView.clipsToBounds = true
+        }
+    }
     
     @IBOutlet weak var shadowView: UIView! {
         didSet {
@@ -36,7 +46,6 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
     @IBOutlet weak var loginButton: UIButton! {
         didSet {
             loginButton.layer.cornerRadius = 10
@@ -45,8 +54,20 @@ class LoginViewController: UIViewController {
             loginButton.layer.shadowOpacity = 0.5
             loginButton.layer.shadowOffset = CGSize(width: 1, height: 1)
             loginButton.layer.shadowRadius = 5
-            
             loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        }
+    }
+    
+    @IBOutlet weak var signUpButton: UIButton! {
+        didSet {
+            signUpButton.layer.cornerRadius = 10
+            signUpButton.layer.masksToBounds = false
+            signUpButton.layer.shadowColor = UIColor.white.cgColor
+            signUpButton.layer.shadowOpacity = 0.5
+            signUpButton.layer.shadowOffset = CGSize(width: 1, height: 1)
+            signUpButton.layer.shadowRadius = 5
+            
+            signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -54,10 +75,14 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
-    @IBOutlet weak var createOneNowButton: UIButton!
+    @IBOutlet weak var createOneNowButton: UIButton! {
+        didSet {
+            createOneNowButton.addTarget(self, action: #selector(createOneNowButtonTapped), for: .touchUpInside)
+        }
+    }
     
     //--------------------------------Global Variables-------------------------------------------//
-
+    
     var ref : DatabaseReference!
     
     
@@ -66,9 +91,20 @@ class LoginViewController: UIViewController {
         
         ref = Database.database().reference()
         
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationItem.title = "Login"
+        
     }
     
     //--------------------------------Functions------------------------------------------------//
+
+    @objc func createOneNowButtonTapped() {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else {return}
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
     @objc func loginButtonTapped() {
         guard let email = emailTextField.text,
@@ -89,7 +125,15 @@ class LoginViewController: UIViewController {
             }
         }
     }
-
+    
+    @objc func signUpButtonTapped() {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else {return}
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
 }
+
 
 
