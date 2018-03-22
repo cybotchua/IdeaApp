@@ -95,6 +95,9 @@ class LoginViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationItem.title = "Login"
         
+        loginButton.isEnabled = false
+        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
     //--------------------------------Functions------------------------------------------------//
@@ -105,6 +108,24 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        
+        guard let email = emailTextField.text,
+            let password = passwordTextField.text,
+            !email.isEmpty,
+            !password.isEmpty
+            else {
+                loginButton.isEnabled = false
+                return
+        }
+        loginButton.isEnabled = true
+    }
     
     @objc func loginButtonTapped() {
         guard let email = emailTextField.text,

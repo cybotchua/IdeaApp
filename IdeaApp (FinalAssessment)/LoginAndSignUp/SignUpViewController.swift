@@ -108,7 +108,38 @@ class SignUpViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationItem.title = "Sign Up"
 
+        signUpButton.isEnabled = false
+        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        firstNameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        lastNameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        confirmPasswordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+    }
+    
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
         
+        guard let email = emailTextField.text,
+            let firstName = firstNameTextField.text,
+            let lastName = lastNameTextField.text,
+            let password = passwordTextField.text,
+            let confirmPassword = confirmPasswordTextField.text,
+            !email.isEmpty,
+            !firstName.isEmpty,
+            !lastName.isEmpty,
+            !password.isEmpty,
+            !confirmPassword.isEmpty,
+            profileImageView.image != UIImage(named: "addCameraImage")
+            else {
+                signUpButton.isEnabled = false
+                return
+        }
+        signUpButton.isEnabled = true
     }
     
     @objc func signUpButtonTapped() {
@@ -147,7 +178,7 @@ class SignUpViewController: UIViewController {
                     
                     guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController else {return}
                     
-                    self.navigationController?.popToRootViewController(animated: false)
+                    self.navigationController?.popViewController(animated: false)
                     
                     self.present(vc, animated: false, completion: nil)
                 }
@@ -198,6 +229,22 @@ extension SignUpViewController : UIImagePickerControllerDelegate, UINavigationCo
         
         profileImageView.image = image
         
+        guard let email = emailTextField.text,
+            let firstName = firstNameTextField.text,
+            let lastName = lastNameTextField.text,
+            let password = passwordTextField.text,
+            let confirmPassword = confirmPasswordTextField.text,
+            !email.isEmpty,
+            !firstName.isEmpty,
+            !lastName.isEmpty,
+            !password.isEmpty,
+            !confirmPassword.isEmpty,
+            profileImageView.image != UIImage(named: "addCameraImage")
+            else {
+                signUpButton.isEnabled = false
+                return
+        }
+        signUpButton.isEnabled = true
     }
     
 }

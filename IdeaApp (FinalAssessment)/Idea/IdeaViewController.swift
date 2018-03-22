@@ -7,8 +7,19 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class IdeaViewController: UIViewController {
+    
+    
+    @IBAction func logOutButtonTapped(_ sender: Any) {
+        do{
+            try Auth.auth().signOut()
+            dismiss(animated: true, completion: nil)
+        } catch {
+            
+        }
+    }
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -41,7 +52,7 @@ extension IdeaViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? IdeaTableViewCell else {return UITableViewCell()}
         
         cell.titleLabel.text = ideas[indexPath.row].title
-        cell.statusLabel.text = ideas[indexPath.row].status
+        cell.statusLabel.text = ideas[indexPath.row].status.rawValue
         cell.dateLabel.text = ideas[indexPath.row].date
         
         return cell
