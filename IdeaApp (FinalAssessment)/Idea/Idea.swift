@@ -19,6 +19,7 @@ class Idea {
     var dislikes : Int = 0
     var comments : String = ""
     var location : String = ""
+    var distance : String = ""
     
     
     init() {

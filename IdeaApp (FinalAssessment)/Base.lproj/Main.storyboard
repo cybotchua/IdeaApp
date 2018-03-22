@@ -614,6 +614,10 @@
                         <viewLayoutGuide key="safeArea" id="qKv-2x-30g"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Explore" id="O8d-oi-6ZD"/>
+                    <connections>
+                        <outlet property="searchBar" destination="hF6-xF-J5B" id="sSc-Xl-hQA"/>
+                        <outlet property="tableView" destination="XGT-B6-WKq" id="yAm-NC-nXR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9X-kM-0Qq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
