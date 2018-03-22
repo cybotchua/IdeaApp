@@ -18,13 +18,24 @@ class IdeaDetailViewController: UIViewController {
         didSet {
             let attr = NSDictionary(object: UIFont(name: "HelveticaNeue-Bold", size: 18.0)!, forKey: NSAttributedStringKey.font as NSCopying)
             segmentedControl.setTitleTextAttributes(attr as [NSObject : AnyObject] , for: .normal)
-
+            
+            segmentedControl.addTarget(self, action: #selector(indexChanged), for: .valueChanged)
+            
+            segmentedControl.selectedSegmentIndex = 0
         }
     }
     
-    @IBOutlet weak var imageContainerView: UIView!
+    @IBOutlet weak var imageContainerView: UIView! {
+        didSet {
+            imageContainerView.isHidden = true
+        }
+    }
     
-    @IBOutlet weak var mapContainerView: UIView!
+    @IBOutlet weak var mapContainerView: UIView! {
+        didSet {
+            mapContainerView.isHidden = false
+        }
+    }
     
     @IBOutlet weak var dateLabel: UILabel!
     
@@ -49,6 +60,22 @@ class IdeaDetailViewController: UIViewController {
         super.viewDidLoad()
         loadDetails()
         
+        let notification = Notification(name: Notification.Name.init("Pass Selected Idea"), object: nil, userInfo: ["Selected Idea" : selectedIdea])
+        NotificationCenter.default.post(notification)
+
+    }
+    
+    @objc func indexChanged() {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            imageContainerView.isHidden = true
+            mapContainerView.isHidden = false
+        case 1:
+            mapContainerView.isHidden = true
+            imageContainerView.isHidden = false
+        default:
+            break
+        }
     }
     
     func loadDetails() {

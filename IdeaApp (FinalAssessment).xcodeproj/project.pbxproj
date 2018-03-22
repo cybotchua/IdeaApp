@@ -26,6 +26,7 @@
 		0008952B206393AB00FA179E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008952A206393AB00FA179E /* User.swift */; };
 		0008952D2063CBC400FA179E /* ContainerImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008952C2063CBC400FA179E /* ContainerImageViewController.swift */; };
 		0008952F2063CBCE00FA179E /* ContainerMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008952E2063CBCE00FA179E /* ContainerMapViewController.swift */; };
+		00878B4D20640E2F003C51EF /* ExploreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00878B4C20640E2E003C51EF /* ExploreTableViewCell.swift */; };
 		FC2A0712FB0BF16D344B4EBA /* Pods_IdeaApp__FinalAssessment_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		0008952A206393AB00FA179E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0008952C2063CBC400FA179E /* ContainerImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerImageViewController.swift; sourceTree = "<group>"; };
 		0008952E2063CBCE00FA179E /* ContainerMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapViewController.swift; sourceTree = "<group>"; };
+		00878B4C20640E2E003C51EF /* ExploreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTableViewCell.swift; sourceTree = "<group>"; };
 		05F01074C114670F2347F176 /* Pods-IdeaApp (FinalAssessment).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).debug.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).debug.xcconfig"; sourceTree = "<group>"; };
 		497EA11F04F6B7200B8741BC /* Pods-IdeaApp (FinalAssessment).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).release.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).release.xcconfig"; sourceTree = "<group>"; };
 		7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdeaApp__FinalAssessment_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				0008951E20636FF800FA179E /* ExploreViewController.swift */,
+				00878B4C20640E2E003C51EF /* ExploreTableViewCell.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				000895252063729400FA179E /* Idea.swift in Sources */,
 				0008951D20636FF000FA179E /* AddViewController.swift in Sources */,
 				0008952D2063CBC400FA179E /* ContainerImageViewController.swift in Sources */,
+				00878B4D20640E2F003C51EF /* ExploreTableViewCell.swift in Sources */,
 				00089512206222A100FA179E /* LoginViewController.swift in Sources */,
 				0008951F20636FF800FA179E /* ExploreViewController.swift in Sources */,
 				0008952F2063CBCE00FA179E /* ContainerMapViewController.swift in Sources */,
