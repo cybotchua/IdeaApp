@@ -13,9 +13,17 @@ class InitialViewController: UIViewController {
 
     var timer = Timer()
     
+    var firstTimeChecker : Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(goToMainScreen), userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super .viewDidAppear(animated)
+        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(goToMainScreen), userInfo: nil, repeats: true)
+
     }
     
     @objc func goToMainScreen() {
