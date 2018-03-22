@@ -24,6 +24,8 @@
 		000895252063729400FA179E /* Idea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000895242063729400FA179E /* Idea.swift */; };
 		00089527206373B600FA179E /* IdeaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00089526206373B600FA179E /* IdeaDetailViewController.swift */; };
 		0008952B206393AB00FA179E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008952A206393AB00FA179E /* User.swift */; };
+		0008952D2063CBC400FA179E /* ContainerImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008952C2063CBC400FA179E /* ContainerImageViewController.swift */; };
+		0008952F2063CBCE00FA179E /* ContainerMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0008952E2063CBCE00FA179E /* ContainerMapViewController.swift */; };
 		FC2A0712FB0BF16D344B4EBA /* Pods_IdeaApp__FinalAssessment_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		000895242063729400FA179E /* Idea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Idea.swift; sourceTree = "<group>"; };
 		00089526206373B600FA179E /* IdeaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeaDetailViewController.swift; sourceTree = "<group>"; };
 		0008952A206393AB00FA179E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0008952C2063CBC400FA179E /* ContainerImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerImageViewController.swift; sourceTree = "<group>"; };
+		0008952E2063CBCE00FA179E /* ContainerMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMapViewController.swift; sourceTree = "<group>"; };
 		05F01074C114670F2347F176 /* Pods-IdeaApp (FinalAssessment).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).debug.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).debug.xcconfig"; sourceTree = "<group>"; };
 		497EA11F04F6B7200B8741BC /* Pods-IdeaApp (FinalAssessment).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).release.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).release.xcconfig"; sourceTree = "<group>"; };
 		7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdeaApp__FinalAssessment_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +122,8 @@
 				0008951620636F2D00FA179E /* IdeaViewController.swift */,
 				00089526206373B600FA179E /* IdeaDetailViewController.swift */,
 				000895222063702F00FA179E /* IdeaTableViewCell.swift */,
+				0008952C2063CBC400FA179E /* ContainerImageViewController.swift */,
+				0008952E2063CBCE00FA179E /* ContainerMapViewController.swift */,
 				000895242063729400FA179E /* Idea.swift */,
 			);
 			path = Idea;
@@ -306,8 +312,10 @@
 				000895232063702F00FA179E /* IdeaTableViewCell.swift in Sources */,
 				000895252063729400FA179E /* Idea.swift in Sources */,
 				0008951D20636FF000FA179E /* AddViewController.swift in Sources */,
+				0008952D2063CBC400FA179E /* ContainerImageViewController.swift in Sources */,
 				00089512206222A100FA179E /* LoginViewController.swift in Sources */,
 				0008951F20636FF800FA179E /* ExploreViewController.swift in Sources */,
+				0008952F2063CBCE00FA179E /* ContainerMapViewController.swift in Sources */,
 				000894F42061EADB00FA179E /* AppDelegate.swift in Sources */,
 				000895212063700000FA179E /* ProfileViewController.swift in Sources */,
 				0008950C206215A100FA179E /* Extension.swift in Sources */,

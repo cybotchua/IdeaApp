@@ -14,7 +14,13 @@ class IdeaDetailViewController: UIViewController {
     
     @IBOutlet weak var descriptionTextView: UITextView!
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentedControl: UISegmentedControl! {
+        didSet {
+            let attr = NSDictionary(object: UIFont(name: "HelveticaNeue-Bold", size: 18.0)!, forKey: NSAttributedStringKey.font as NSCopying)
+            segmentedControl.setTitleTextAttributes(attr as [NSObject : AnyObject] , for: .normal)
+
+        }
+    }
     
     @IBOutlet weak var imageContainerView: UIView!
     
@@ -49,7 +55,7 @@ class IdeaDetailViewController: UIViewController {
         titleLabel.text = selectedIdea.title
         descriptionTextView.text = selectedIdea.description
         dateLabel.text = selectedIdea.date
-        statusLabel.text = selectedIdea.status.rawValue
+        statusLabel.text = selectedIdea.status
         likesLabel.text = "\(selectedIdea.likes) likes"
         dislikesLabel.text = "\(selectedIdea.dislikes) dislikes"
         

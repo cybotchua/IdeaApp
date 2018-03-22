@@ -10,7 +10,7 @@ import Foundation
 
 class Idea {
     var title : String = ""
-    var status : status = .notStarted
+    var status : String = ""
     var date : String = ""
     var ideaID : String = ""
     var description : String = ""
@@ -18,10 +18,21 @@ class Idea {
     var likes : Int = 0
     var dislikes : Int = 0
     var comments : String = ""
+    var location : String = ""
     
     
     init() {
         
+    }
+    
+    init(ideaID: String, dict: [String : Any]) {
+        self.ideaID = ideaID
+        self.title = dict["title"] as? String ?? ""
+        self.location = dict["location"] as? String ?? ""
+        self.date = dict["date"] as? String ?? ""
+        self.description = dict["description"] as? String ?? ""
+        self.imageURL = dict["imageURL"] as? String ?? ""
+        self.status = dict["status"] as? String ?? "Not Started"
     }
     
     enum status : String {

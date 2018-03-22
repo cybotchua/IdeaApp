@@ -111,10 +111,11 @@ class AddViewController: UIViewController {
             let image = imageView.image {
             
             let ideaRef = self.ref.child("ideas").childByAutoId()
+            let status : Idea.status = .inProgress
             
             uploadToStorage(image, ideaRef.key)
             
-            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "location" : location]
+            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "location" : location, "status" : status.rawValue]
             
             ideaRef.setValue(ideaPost)
             ref.child("users").child(uid).child("ideas").child(ideaRef.key).setValue(ideaPost)
