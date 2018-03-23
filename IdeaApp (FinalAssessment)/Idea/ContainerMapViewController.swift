@@ -19,22 +19,43 @@ class ContainerMapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpMapView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setUpMapView(notification:)), name: NSNotification.Name(rawValue: "Pass Selected Idea"), object: nil)
     }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let pinView = MKPinAnnotationView.init()
+        pinView.pinTintColor = UIColor.red
+        
+        pinView.canShowCallout = true
+        
+        return pinView
+    }
     
-    func setUpMapView() {
-        let initialLocation = CLLocation(latitude: 3.1349, longitude: 101.6299)
+    @objc func setUpMapView(notification: NSNotification) {
+        mapView.delegate = self
+        
+        guard let selectedIdea = notification.userInfo?["Selected Idea"] as? Idea else {return}
+        
+        let latitude = selectedIdea.latitude
+        let longitude = selectedIdea.longitude
+        
+        let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
         centerMapOnLocation(location: initialLocation)
         
+        let annot = MKPointAnnotation.init()
+        annot.coordinate = CLLocationCoordinate2D.init(latitude: latitude, longitude: longitude)
+        annot.title = selectedIdea.title
+        annot.subtitle = selectedIdea.location
+        
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(annot)
+        }
     }
     
     func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius, regionRadius)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
     }
 

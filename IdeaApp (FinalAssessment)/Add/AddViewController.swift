@@ -44,6 +44,8 @@ class AddViewController: UIViewController {
     }
     
     var ref : DatabaseReference!
+    var latitude : Double = 0
+    var longitude : Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,26 @@ class AddViewController: UIViewController {
         let locationPicker = LocationPicker()
         locationPicker.pickCompletion = { (pickedLocationItem) in
             let address = pickedLocationItem.name
+            
+            guard let coordinate = pickedLocationItem.coordinate else {return}
+            self.latitude = coordinate.latitude
+            self.longitude = coordinate.longitude
             self.locationLabel.text = address
+            
+            guard let date = self.dateTextField.text,
+                let title = self.titleTextField.text,
+                let description = self.descriptionTextField.text,
+                let location = self.locationLabel.text,
+                !date.isEmpty,
+                !title.isEmpty,
+                !description.isEmpty,
+                location != "Add Location",
+                self.imageView.image != UIImage(named: "addCameraImage")
+                else {
+                    self.createButton.isEnabled = false
+                    return
+            }
+            self.createButton.isEnabled = true
         }
         navigationController!.pushViewController(locationPicker, animated: true)
     }
@@ -79,9 +100,11 @@ class AddViewController: UIViewController {
         guard let date = dateTextField.text,
             let title = titleTextField.text,
             let description = descriptionTextField.text,
+            let location = locationLabel.text,
             !date.isEmpty,
             !title.isEmpty,
             !description.isEmpty,
+            location != "Add Location",
             imageView.image != UIImage(named: "addCameraImage")
             else {
                 createButton.isEnabled = false
@@ -124,14 +147,15 @@ class AddViewController: UIViewController {
             let title = titleTextField.text,
             let date = dateTextField.text,
             let description = descriptionTextField.text,
-            let image = imageView.image {
+            let image = imageView.image,
+            let location = locationLabel.text {
             
             let ideaRef = self.ref.child("ideas").childByAutoId()
             let status : Idea.Status = .inProgress
             
             uploadToStorage(image, ideaRef.key)
             
-            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "status" : status.rawValue]
+            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "location" : location, "latitude" : self.latitude, "longitude" : self.longitude, "status" : status.rawValue]
             
             ideaRef.setValue(ideaPost)
             ref.child("users").child(uid).child("ideas").child(ideaRef.key).setValue(ideaPost)
@@ -140,6 +164,7 @@ class AddViewController: UIViewController {
             dateTextField.text = ""
             descriptionTextField.text = ""
             imageView.image = UIImage(named: "addCameraImage")
+            locationLabel.text = "Add Location"
         }
     }
 
@@ -161,9 +186,11 @@ extension AddViewController : UIImagePickerControllerDelegate, UINavigationContr
         guard let date = dateTextField.text,
             let title = titleTextField.text,
             let description = descriptionTextField.text,
+            let location = locationLabel.text,
             !date.isEmpty,
             !title.isEmpty,
             !description.isEmpty,
+            location != "Add Location",
             imageView.image != UIImage(named: "addCameraImage")
             else {
                 createButton.isEnabled = false

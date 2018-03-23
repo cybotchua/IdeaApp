@@ -20,7 +20,8 @@ class Idea {
     var comments : String = ""
     var location : String = ""
     var distance : String = ""
-    
+    var latitude : Double = 0
+    var longitude : Double = 0
     
     init() {
         
@@ -36,6 +37,9 @@ class Idea {
         self.status = Idea.Status(rawValue: dict["status"] as! String) ?? .notStarted
         self.likes = dict["numberOfLikes"] as? Int ?? 0
         self.dislikes = dict["numberOfDislikes"] as? Int ?? 0
+        self.latitude = dict["latitude"] as? Double ?? 0
+        self.longitude = dict["longitude"] as? Double ?? 0
+        
     }
     
     enum Status : String {
