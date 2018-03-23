@@ -57,7 +57,6 @@ class AddViewController: UIViewController {
         titleTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         descriptionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         
-        
     }
     
     @objc func addLocationButtonTapped() {
@@ -85,6 +84,7 @@ class AddViewController: UIViewController {
             }
             self.createButton.isEnabled = true
         }
+        navigationController?.navigationBar.tintColor = UIColor.white
         navigationController!.pushViewController(locationPicker, animated: true)
     }
     
