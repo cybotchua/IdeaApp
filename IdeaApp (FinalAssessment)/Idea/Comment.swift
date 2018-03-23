@@ -15,6 +15,7 @@ class Comment {
     var commentID : String = ""
     var commenterID : String = ""
     var timeStamp : NSNumber = 0
+    var commenterPhotoURL : String = ""
     
     init() {
         
@@ -24,10 +25,11 @@ class Comment {
         
         self.commentID = commentID
         self.comment = dict["comment"] as? String ?? ""
-        self.commenterFirstName = dict["firstName"] as? String ?? ""
-        self.commenterLastName = dict["lastName"] as? String ?? ""
+        self.commenterFirstName = dict["commenterFirstName"] as? String ?? ""
+        self.commenterLastName = dict["commenterLastName"] as? String ?? ""
         self.commenterID = dict["commenterID"] as? String ?? ""
         self.timeStamp = dict["timeStamp"] as? NSNumber ?? 0
+        self.commenterPhotoURL = dict["commenterPhotoURL"] as? String ?? ""
     }
     
     

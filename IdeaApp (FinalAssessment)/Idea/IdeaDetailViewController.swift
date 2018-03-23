@@ -86,6 +86,7 @@ class IdeaDetailViewController: UIViewController {
     @IBOutlet weak var commentTableView: UITableView! {
         didSet {
             commentTableView.dataSource = self
+            commentTableView.rowHeight = 100
         }
     }
     
@@ -115,12 +116,16 @@ class IdeaDetailViewController: UIViewController {
     
     var comments : [Comment] = []
     
+    var commenterPhotoURL : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
         
         loadDetails()
+        
+        observeComments()
         
         let notification = Notification(name: Notification.Name.init("Pass Selected Idea"), object: nil, userInfo: ["Selected Idea" : selectedIdea])
         NotificationCenter.default.post(notification)
@@ -140,6 +145,23 @@ class IdeaDetailViewController: UIViewController {
         cancelButton.isHidden = true
     }
     
+    func observeComments() {
+        ref.child("ideas/\(selectedIdea.ideaID)/comments").observe(.childAdded) { (snapshot) in
+            if let commentDict = snapshot.value as? [String : Any] {
+                
+                let aComment = Comment(commentID: snapshot.key, dict: commentDict)
+                
+                DispatchQueue.main.async {
+                    self.comments.append(aComment)
+                    let indexPath = IndexPath(row: self.comments.count - 1, section: 0)
+                    self.commentTableView.insertRows(at: [indexPath], with: .automatic)
+                    self.commentTableView.reloadData()
+                }
+            }
+            
+        }
+    }
+    
     @objc func addCommentButtonTapped() {
         customView.isHidden = false
         
@@ -150,10 +172,12 @@ class IdeaDetailViewController: UIViewController {
                     let lastName = userDict["lastName"] as? String,
                     let profilePicURL = userDict["profilePicURL"] as? String {
                     
+                    self.commenterPhotoURL = profilePicURL
+                    
                     DispatchQueue.main.async {
                         self.firstNameLabel.text = firstName
                         self.lastNameLabel.text = lastName
-                        self.getImage(profilePicURL, self.profileImageView)
+                        self.getImage(self.commenterPhotoURL, self.profileImageView)
                     }
                 }
             })
@@ -187,13 +211,17 @@ class IdeaDetailViewController: UIViewController {
             let commenterLastName = lastNameLabel.text {
             
             let timeStamp = Date().timeIntervalSince1970
-            let commentDict : [String : Any] = ["comment" : comment, "commenterFirstName" : commenterFirstName, "commenterLastName" : commenterLastName, "timeStamp" : timeStamp, "commenterUID" : commenterUID, "ideaUID" : selectedIdea.ideaID]
+                let commentDict : [String : Any] = ["comment" : comment, "commenterFirstName" : commenterFirstName, "commenterLastName" : commenterLastName, "timeStamp" : timeStamp, "commenterUID" : commenterUID, "ideaUID" : selectedIdea.ideaID, "commenterPhotoURL" : commenterPhotoURL]
             
-            ref.child("comments").childByAutoId().setValue(commentDict)
+            let path = ref.child("comments").childByAutoId()
             
-            ref.child("ideas/\(selectedIdea.ideaID)").updateChildValues(["comments" : commentDict])
+            path.setValue(commentDict)
+            
+            ref.child("ideas/\(selectedIdea.ideaID)/comments").updateChildValues([path.key : commentDict])
             
             customView.isHidden = true
+            addCommentButton.isHidden = false
+            commentLabel.isHidden = false
             commentTextField.text = ""
         }
     }
@@ -351,6 +379,7 @@ extension IdeaDetailViewController : UITableViewDataSource {
         
         cell.nameLabel.text = "\(firstName) \(lastName)"
         cell.commentTextView.text = comments[indexPath.row].comment
+        getImage(comments[indexPath.row].commenterPhotoURL, cell.commenterImageView)
         
         return cell
     }
