@@ -10,6 +10,7 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
+import LocationPickerViewController
 
 class AddViewController: UIViewController {
 
@@ -21,7 +22,14 @@ class AddViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var locationLabel: UILabel! {
+        didSet {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(addLocationButtonTapped))
+            locationLabel.isUserInteractionEnabled = true
+            locationLabel.addGestureRecognizer(tap)
+            
+        }
+    }
     
     @IBOutlet weak var dateTextField: UITextField!
     
@@ -43,11 +51,22 @@ class AddViewController: UIViewController {
         ref = Database.database().reference()
         
         createButton.isEnabled = false
-        locationTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         dateTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         titleTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         descriptionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        
+        
     }
+    
+    @objc func addLocationButtonTapped() {
+        let locationPicker = LocationPicker()
+        locationPicker.pickCompletion = { (pickedLocationItem) in
+            let address = pickedLocationItem.name
+            self.locationLabel.text = address
+        }
+        navigationController!.pushViewController(locationPicker, animated: true)
+    }
+    
     
     @objc func editingChanged(_ textField: UITextField) {
         if textField.text?.count == 1 {
@@ -57,11 +76,9 @@ class AddViewController: UIViewController {
             }
         }
         
-        guard let location = locationTextField.text,
-            let date = dateTextField.text,
+        guard let date = dateTextField.text,
             let title = titleTextField.text,
             let description = descriptionTextField.text,
-            !location.isEmpty,
             !date.isEmpty,
             !title.isEmpty,
             !description.isEmpty,
@@ -107,7 +124,6 @@ class AddViewController: UIViewController {
             let title = titleTextField.text,
             let date = dateTextField.text,
             let description = descriptionTextField.text,
-            let location = locationTextField.text,
             let image = imageView.image {
             
             let ideaRef = self.ref.child("ideas").childByAutoId()
@@ -115,7 +131,7 @@ class AddViewController: UIViewController {
             
             uploadToStorage(image, ideaRef.key)
             
-            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "location" : location, "status" : status.rawValue]
+            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "status" : status.rawValue]
             
             ideaRef.setValue(ideaPost)
             ref.child("users").child(uid).child("ideas").child(ideaRef.key).setValue(ideaPost)
@@ -123,7 +139,6 @@ class AddViewController: UIViewController {
             titleTextField.text = ""
             dateTextField.text = ""
             descriptionTextField.text = ""
-            locationTextField.text = ""
             imageView.image = UIImage(named: "addCameraImage")
         }
     }
@@ -143,11 +158,9 @@ extension AddViewController : UIImagePickerControllerDelegate, UINavigationContr
         
         imageView.image = image
         
-        guard let location = locationTextField.text,
-            let date = dateTextField.text,
+        guard let date = dateTextField.text,
             let title = titleTextField.text,
             let description = descriptionTextField.text,
-            !location.isEmpty,
             !date.isEmpty,
             !title.isEmpty,
             !description.isEmpty,
