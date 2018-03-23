@@ -82,7 +82,7 @@ class IdeaDetailViewController: UIViewController {
         titleLabel.text = selectedIdea.title
         descriptionTextView.text = selectedIdea.description
         dateLabel.text = selectedIdea.date
-        statusLabel.text = selectedIdea.status
+        statusLabel.text = selectedIdea.status.rawValue
         likesLabel.text = "\(selectedIdea.likes) likes"
         dislikesLabel.text = "\(selectedIdea.dislikes) dislikes"
         

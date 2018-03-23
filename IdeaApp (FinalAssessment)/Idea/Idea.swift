@@ -10,7 +10,7 @@ import Foundation
 
 class Idea {
     var title : String = ""
-    var status : String = ""
+    var status : Status = .notStarted
     var date : String = ""
     var ideaID : String = ""
     var description : String = ""
@@ -33,10 +33,10 @@ class Idea {
         self.date = dict["date"] as? String ?? ""
         self.description = dict["description"] as? String ?? ""
         self.imageURL = dict["imageURL"] as? String ?? ""
-        self.status = dict["status"] as? String ?? "Not Started"
+        self.status = Idea.Status(rawValue: dict["status"] as! String) ?? .notStarted
     }
     
-    enum status : String {
+    enum Status : String {
         case notStarted = "Not Started"
         case inProgress = "In Progress"
         case completed = "Completed"

@@ -81,7 +81,7 @@ extension ExploreViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ExploreTableViewCell else {return UITableViewCell()}
         
         cell.titleLabel.text = ideas[indexPath.row].title
-        cell.statusLabel.text = ideas[indexPath.row].status
+        cell.statusLabel.text = ideas[indexPath.row].status.rawValue
         cell.dateLabel.text = ideas[indexPath.row].date
         cell.distanceLabel.text = ideas[indexPath.row].distance
         

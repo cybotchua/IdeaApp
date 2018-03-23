@@ -111,7 +111,7 @@ class AddViewController: UIViewController {
             let image = imageView.image {
             
             let ideaRef = self.ref.child("ideas").childByAutoId()
-            let status : Idea.status = .inProgress
+            let status : Idea.Status = .inProgress
             
             uploadToStorage(image, ideaRef.key)
             

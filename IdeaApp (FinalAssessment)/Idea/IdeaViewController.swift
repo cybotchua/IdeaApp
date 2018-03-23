@@ -22,6 +22,12 @@ class IdeaViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var searchBar: UISearchBar! {
+        didSet {
+            searchBar.delegate = self
+        }
+    }
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
@@ -31,6 +37,7 @@ class IdeaViewController: UIViewController {
     }
     
     var ideas : [Idea] = []
+    var filteredIdeas : [Idea] = []
     
     var ref : DatabaseReference!
     
@@ -43,7 +50,7 @@ class IdeaViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationItem.title = "Ideas"
         
-        observeIdeas()
+        observeIdeas()        
     }
     
     func observeIdeas() {
@@ -55,6 +62,7 @@ class IdeaViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.ideas.append(idea)
+                    self.filteredIdeas.append(idea)
                     let indexPath = IndexPath(row: self.ideas.count - 1, section: 0)
                     self.tableView.insertRows(at: [indexPath], with: .automatic)
                     self.tableView.reloadData()
@@ -73,15 +81,15 @@ class IdeaViewController: UIViewController {
 extension IdeaViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ideas.count
+        return filteredIdeas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? IdeaTableViewCell else {return UITableViewCell()}
         
-        cell.titleLabel.text = ideas[indexPath.row].title
-        cell.statusLabel.text = ideas[indexPath.row].status
-        cell.dateLabel.text = ideas[indexPath.row].date
+        cell.titleLabel.text = filteredIdeas[indexPath.row].title
+        cell.statusLabel.text = filteredIdeas[indexPath.row].status.rawValue
+        cell.dateLabel.text = filteredIdeas[indexPath.row].date
         
         return cell
     }
@@ -92,7 +100,7 @@ extension IdeaViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "IdeaDetailViewController") as? IdeaDetailViewController else {return}
         
-        let selectedIdea = ideas[indexPath.row]
+        let selectedIdea = filteredIdeas[indexPath.row]
         
         vc.selectedIdea = selectedIdea
         
@@ -100,4 +108,36 @@ extension IdeaViewController: UITableViewDelegate {
     }
     
     
+}
+
+extension IdeaViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            filteredIdeas = ideas
+            tableView.reloadData()
+            return
+        }
+
+        filteredIdeas = ideas.filter({ (idea) -> Bool in
+            idea.title.lowercased().contains(searchText.lowercased())
+        })
+        self.tableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        guard let scopeString = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] else {return}
+        
+        let selectedStatus = Idea.Status(rawValue: scopeString) ?? .notStarted
+        let searchText = searchBar.text ?? ""
+        
+        filteredIdeas = ideas.filter({ (idea) -> Bool in
+            let isStatusMatching = (idea.status == .notStarted) || (idea.status == selectedStatus)
+            
+            let isMatchingSearchText = idea.title.lowercased().contains(searchText.lowercased()) || searchText.lowercased().count == 0
+            
+            return isStatusMatching && isMatchingSearchText
+        })
+            self.tableView.reloadData()
+        
+    }
 }

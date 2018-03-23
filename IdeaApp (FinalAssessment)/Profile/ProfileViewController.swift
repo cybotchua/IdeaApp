@@ -72,9 +72,9 @@ class ProfileViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.emailLabel.text = email
                         self.nameLabel.text = "\(firstName) \(lastName)"
+                        self.getImage(profilePicURL, self.imageView)
                     }
                     
-                    self.getImage(profilePicURL, self.imageView)
                     
                 }
                 
