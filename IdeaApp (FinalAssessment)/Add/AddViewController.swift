@@ -57,6 +57,7 @@ class AddViewController: UIViewController {
         titleTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         descriptionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         
+        navigationController?.navigationBar.tintColor = UIColor.white
     }
     
     @objc func addLocationButtonTapped() {
