@@ -83,16 +83,37 @@ class IdeaDetailViewController: UIViewController {
     
     @IBOutlet weak var commentLabel: UILabel!
     
-    @IBOutlet weak var commentTableView: UITableView!
+    @IBOutlet weak var commentTableView: UITableView! {
+        didSet {
+            commentTableView.dataSource = self
+        }
+    }
     
+    @IBOutlet weak var addCommentButton: UIButton! {
+        didSet {
+            addCommentButton.addTarget(self, action: #selector(addCommentButtonTapped), for: .touchUpInside)
+        }
+    }
+    
+    @IBOutlet weak var customView: UIView!
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    
+    @IBOutlet weak var lastNameLabel: UILabel!
+    
+    @IBOutlet weak var commentTextField: UITextField!
+    
+    @IBOutlet weak var commentCancelButton: UIButton!
+    
+    @IBOutlet weak var commentButton: UIButton!
     
     var selectedIdea : Idea = Idea()
     
     var ref : DatabaseReference!
     
-//    var likesCount : Int = 0
-//
-//    var dislikesCount : Int = 0
+    var comments : [Comment] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +124,11 @@ class IdeaDetailViewController: UIViewController {
         
         let notification = Notification(name: Notification.Name.init("Pass Selected Idea"), object: nil, userInfo: ["Selected Idea" : selectedIdea])
         NotificationCenter.default.post(notification)
+        
+        commentTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 
+        
+        customView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,6 +138,64 @@ class IdeaDetailViewController: UIViewController {
         statusTextField.isHidden = true
         doneButton.isHidden = true
         cancelButton.isHidden = true
+    }
+    
+    @objc func addCommentButtonTapped() {
+        customView.isHidden = false
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            ref.child("users/\(uid)").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let userDict = snapshot.value as? [String : Any],
+                    let firstName = userDict["firstName"] as? String,
+                    let lastName = userDict["lastName"] as? String,
+                    let profilePicURL = userDict["profilePicURL"] as? String {
+                    
+                    DispatchQueue.main.async {
+                        self.firstNameLabel.text = firstName
+                        self.lastNameLabel.text = lastName
+                        self.getImage(profilePicURL, self.profileImageView)
+                    }
+                }
+            })
+        }
+        
+        commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
+        commentButton.layer.cornerRadius = 10
+        commentButton.layer.borderWidth = 1
+        
+        commentCancelButton.addTarget(self, action: #selector(commentCancelButtonTapped), for: .touchUpInside)
+        commentCancelButton.layer.cornerRadius = 10
+        commentCancelButton.layer.borderWidth = 1
+        addCommentButton.isHidden = true
+        commentLabel.isHidden = true
+        commentButton.isEnabled = false
+    }
+    
+    @objc func commentCancelButtonTapped() {
+        customView.isHidden = true
+        addCommentButton.isHidden = false
+        commentLabel.isHidden = false
+    }
+    
+    
+    
+    @objc func commentButtonTapped() {
+        
+        if let commenterUID = Auth.auth().currentUser?.uid,
+            let comment = commentTextField.text,
+            let commenterFirstName = firstNameLabel.text,
+            let commenterLastName = lastNameLabel.text {
+            
+            let timeStamp = Date().timeIntervalSince1970
+            let commentDict : [String : Any] = ["comment" : comment, "commenterFirstName" : commenterFirstName, "commenterLastName" : commenterLastName, "timeStamp" : timeStamp, "commenterUID" : commenterUID, "ideaUID" : selectedIdea.ideaID]
+            
+            ref.child("comments").childByAutoId().setValue(commentDict)
+            
+            ref.child("ideas/\(selectedIdea.ideaID)").updateChildValues(["comments" : commentDict])
+            
+            customView.isHidden = true
+            commentTextField.text = ""
+        }
     }
     
     @objc func likeButtonTapped() {
@@ -213,6 +296,63 @@ class IdeaDetailViewController: UIViewController {
         dislikesLabel.text = "\(selectedIdea.dislikes) dislikes"
         
     }
+    
+    func getImage(_ urlString: String, _ imageView: UIImageView) {
+        guard let url = URL.init(string: urlString) else {return}
+        
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: url) { (data, response, error) in
+            if let validError = error {
+                print(validError.localizedDescription)
+            }
+            
+            if let validData = data {
+                let image = UIImage(data: validData)
+                
+                DispatchQueue.main.async {
+                    imageView.image = image
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        
+        guard let comment = commentTextField.text,
+            !comment.isEmpty
+            else {
+                commentButton.isEnabled = false
+                return
+        }
+        commentButton.isEnabled = true
+    }
 
 
+}
+
+extension IdeaDetailViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CommentsTableViewCell else {return UITableViewCell()}
+        
+        let firstName = comments[indexPath.row].commenterFirstName
+        let lastName = comments[indexPath.row].commenterLastName
+        
+        cell.nameLabel.text = "\(firstName) \(lastName)"
+        cell.commentTextView.text = comments[indexPath.row].comment
+        
+        return cell
+    }
+    
 }

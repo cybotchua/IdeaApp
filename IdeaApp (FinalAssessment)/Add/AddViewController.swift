@@ -155,7 +155,7 @@ class AddViewController: UIViewController {
             
             uploadToStorage(image, ideaRef.key)
             
-            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "location" : location, "latitude" : self.latitude, "longitude" : self.longitude, "status" : status.rawValue]
+            let ideaPost : [String : Any] = ["title" : title, "date" : date, "description" : description, "location" : location, "latitude" : self.latitude, "longitude" : self.longitude, "status" : status.rawValue, "numberOfLikes" : 0, "numberOfDislikes" : 0]
             
             ideaRef.setValue(ideaPost)
             ref.child("users").child(uid).child("ideas").child(ideaRef.key).setValue(ideaPost)

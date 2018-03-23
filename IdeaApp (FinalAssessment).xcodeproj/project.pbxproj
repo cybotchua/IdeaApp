@@ -29,6 +29,8 @@
 		00878B4D20640E2F003C51EF /* ExploreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00878B4C20640E2E003C51EF /* ExploreTableViewCell.swift */; };
 		00D542C02064F0E300EFCE52 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D542BF2064F0E300EFCE52 /* CoreLocation.framework */; };
 		00D542C22064F0E800EFCE52 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D542C12064F0E800EFCE52 /* MapKit.framework */; };
+		00D542C72065178A00EFCE52 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D542C62065178A00EFCE52 /* CommentsTableViewCell.swift */; };
+		00D542C9206519F300EFCE52 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D542C8206519F300EFCE52 /* Comment.swift */; };
 		FC2A0712FB0BF16D344B4EBA /* Pods_IdeaApp__FinalAssessment_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,8 @@
 		00878B4C20640E2E003C51EF /* ExploreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTableViewCell.swift; sourceTree = "<group>"; };
 		00D542BF2064F0E300EFCE52 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		00D542C12064F0E800EFCE52 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		00D542C62065178A00EFCE52 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
+		00D542C8206519F300EFCE52 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		05F01074C114670F2347F176 /* Pods-IdeaApp (FinalAssessment).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).debug.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).debug.xcconfig"; sourceTree = "<group>"; };
 		497EA11F04F6B7200B8741BC /* Pods-IdeaApp (FinalAssessment).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IdeaApp (FinalAssessment).release.xcconfig"; path = "Pods/Target Support Files/Pods-IdeaApp (FinalAssessment)/Pods-IdeaApp (FinalAssessment).release.xcconfig"; sourceTree = "<group>"; };
 		7FBA538ECD54F73C3F39F81E /* Pods_IdeaApp__FinalAssessment_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IdeaApp__FinalAssessment_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,11 +132,13 @@
 			isa = PBXGroup;
 			children = (
 				0008951620636F2D00FA179E /* IdeaViewController.swift */,
-				00089526206373B600FA179E /* IdeaDetailViewController.swift */,
 				000895222063702F00FA179E /* IdeaTableViewCell.swift */,
+				00089526206373B600FA179E /* IdeaDetailViewController.swift */,
+				00D542C62065178A00EFCE52 /* CommentsTableViewCell.swift */,
 				0008952C2063CBC400FA179E /* ContainerImageViewController.swift */,
 				0008952E2063CBCE00FA179E /* ContainerMapViewController.swift */,
 				000895242063729400FA179E /* Idea.swift */,
+				00D542C8206519F300EFCE52 /* Comment.swift */,
 			);
 			path = Idea;
 			sourceTree = "<group>";
@@ -326,9 +332,11 @@
 				000895252063729400FA179E /* Idea.swift in Sources */,
 				0008951D20636FF000FA179E /* AddViewController.swift in Sources */,
 				0008952D2063CBC400FA179E /* ContainerImageViewController.swift in Sources */,
+				00D542C9206519F300EFCE52 /* Comment.swift in Sources */,
 				00878B4D20640E2F003C51EF /* ExploreTableViewCell.swift in Sources */,
 				00089512206222A100FA179E /* LoginViewController.swift in Sources */,
 				0008951F20636FF800FA179E /* ExploreViewController.swift in Sources */,
+				00D542C72065178A00EFCE52 /* CommentsTableViewCell.swift in Sources */,
 				0008952F2063CBCE00FA179E /* ContainerMapViewController.swift in Sources */,
 				000894F42061EADB00FA179E /* AppDelegate.swift in Sources */,
 				000895212063700000FA179E /* ProfileViewController.swift in Sources */,
