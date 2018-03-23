@@ -57,8 +57,7 @@ class IdeaViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
-        
+        tableView.tableHeaderView = searchController.searchBar        
         searchController.searchBar.scopeButtonTitles = ["All", "Not Started", "In Progress", "Completed", "Incomplete"]
         searchController.searchBar.delegate = self
     }

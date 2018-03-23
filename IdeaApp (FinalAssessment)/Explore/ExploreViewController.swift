@@ -12,8 +12,6 @@ import FirebaseDatabase
 
 class ExploreViewController: UIViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
@@ -23,8 +21,11 @@ class ExploreViewController: UIViewController {
     }
     
     var ideas : [Idea] = []
+    var filteredIdeas : [Idea] = []
     
     var ref : DatabaseReference!
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,23 @@ class ExploreViewController: UIViewController {
         ref = Database.database().reference()
         
         observeOtherIdeas()
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
+        searchController.searchBar.scopeButtonTitles = ["All", "Not Started", "In Progress", "Completed", "Incomplete"]
+        searchController.searchBar.delegate = self
+
+    }
+    
+    func filterIdeas(searchText: String, scope: String = "All") {
+        filteredIdeas = ideas.filter({ (idea) -> Bool in
+            let statusMatch = (scope == "All") || (idea.status.rawValue == scope)
+            return statusMatch && idea.title.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
     }
     
     func observeOtherIdeas() {
@@ -74,16 +92,27 @@ class ExploreViewController: UIViewController {
 extension ExploreViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredIdeas.count
+        }
         return ideas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ExploreTableViewCell else {return UITableViewCell()}
         
-        cell.titleLabel.text = ideas[indexPath.row].title
-        cell.statusLabel.text = ideas[indexPath.row].status.rawValue
-        cell.dateLabel.text = ideas[indexPath.row].date
-        cell.distanceLabel.text = ideas[indexPath.row].distance
+        let idea : Idea
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            idea = filteredIdeas[indexPath.row]
+        } else {
+            idea = ideas[indexPath.row]
+        }
+        
+        cell.titleLabel.text = idea.title
+        cell.statusLabel.text = idea.status.rawValue
+        cell.dateLabel.text = idea.date
+        cell.distanceLabel.text = idea.distance
         
         return cell
     }
@@ -94,7 +123,13 @@ extension ExploreViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "IdeaDetailViewController") as? IdeaDetailViewController else {return}
         
-        let selectedIdea = ideas[indexPath.row]
+        let selectedIdea : Idea
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            selectedIdea = filteredIdeas[indexPath.row]
+        } else {
+            selectedIdea = ideas[indexPath.row]
+        }
         
         vc.selectedIdea = selectedIdea
         
@@ -102,4 +137,24 @@ extension ExploreViewController: UITableViewDelegate {
     }
     
     
+}
+
+extension ExploreViewController : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        let searchBar = searchController.searchBar
+        guard let scopeButtonTitles = searchBar.scopeButtonTitles else {return}
+        let scope = scopeButtonTitles[searchBar.selectedScopeButtonIndex]
+        
+        guard let searchText = searchController.searchBar.text else {return}
+        filterIdeas(searchText: searchText, scope: scope)
+    }
+}
+
+extension ExploreViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        guard let searchText = searchBar.text,
+            let scope = searchBar.scopeButtonTitles else {return}
+        filterIdeas(searchText: searchText, scope: scope[selectedScope])
+    }
 }

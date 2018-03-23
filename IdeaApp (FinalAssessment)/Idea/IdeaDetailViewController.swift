@@ -230,38 +230,34 @@ class IdeaDetailViewController: UIViewController {
         likeButton.isEnabled = false
         dislikeButton.isEnabled = true
         
-        if let uid = Auth.auth().currentUser?.uid {
-            ref.child("users/\(uid)/ideas/\(selectedIdea.ideaID)").observeSingleEvent(of: .value, with: { (snapshot) in
+            ref.child("ideas/\(selectedIdea.ideaID)").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let ideaDict = snapshot.value as? [String : Any],
                     var likesCount = ideaDict["numberOfLikes"] as? Int {
                     likesCount += 1
                     
                     let likeDict = ["numberOfLikes" : likesCount]
-                    self.ref.child("users/\(uid)/ideas/\(self.selectedIdea.ideaID)").updateChildValues(likeDict)
+                    self.ref.child("ideas/\(self.selectedIdea.ideaID)").updateChildValues(likeDict)
                     
                     self.likesLabel.text = "\(likesCount) likes"
                 }
             })
-        }
     }
     
     @objc func dislikeButtonTapped() {
         dislikeButton.isEnabled = false
         likeButton.isEnabled = true
         
-        if let uid = Auth.auth().currentUser?.uid {
-            ref.child("users/\(uid)/ideas/\(selectedIdea.ideaID)").observeSingleEvent(of: .value, with: { (snapshot) in
+            ref.child("ideas/\(selectedIdea.ideaID)").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let ideaDict = snapshot.value as? [String : Any],
                     var dislikesCount = ideaDict["numberOfDislikes"] as? Int {
                     dislikesCount += 1
                     
                     let dislikeDict = ["numberOfDislikes" : dislikesCount]
-                    self.ref.child("users/\(uid)/ideas/\(self.selectedIdea.ideaID)").updateChildValues(dislikeDict)
+                    self.ref.child("ideas/\(self.selectedIdea.ideaID)").updateChildValues(dislikeDict)
                     
                     self.dislikesLabel.text = "\(dislikesCount) dislikes"
                 }
             })
-        }
     }
     
     @objc func cancelButtonTapped() {

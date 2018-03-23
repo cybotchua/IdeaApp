@@ -535,7 +535,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XGT-B6-WKq">
-                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="90" id="T6M-XA-aHu" customClass="ExploreTableViewCell" customModule="IdeaApp__FinalAssessment_" customModuleProvider="target">
@@ -599,26 +599,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hF6-xF-J5B">
-                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XGT-B6-WKq" firstAttribute="top" secondItem="hF6-xF-J5B" secondAttribute="bottom" id="3t9-mq-5iZ"/>
-                            <constraint firstItem="hF6-xF-J5B" firstAttribute="top" secondItem="qKv-2x-30g" secondAttribute="top" id="9VR-46-iTT"/>
                             <constraint firstItem="XGT-B6-WKq" firstAttribute="trailing" secondItem="qKv-2x-30g" secondAttribute="trailing" id="D7q-vp-qNU"/>
+                            <constraint firstItem="XGT-B6-WKq" firstAttribute="top" secondItem="qKv-2x-30g" secondAttribute="top" id="Q4q-90-t8h"/>
                             <constraint firstItem="qKv-2x-30g" firstAttribute="bottom" secondItem="XGT-B6-WKq" secondAttribute="bottom" id="VGr-bb-6bf"/>
-                            <constraint firstItem="hF6-xF-J5B" firstAttribute="trailing" secondItem="qKv-2x-30g" secondAttribute="trailing" id="aaP-JM-FvT"/>
-                            <constraint firstItem="hF6-xF-J5B" firstAttribute="leading" secondItem="qKv-2x-30g" secondAttribute="leading" id="gt2-6N-8lk"/>
                             <constraint firstItem="XGT-B6-WKq" firstAttribute="leading" secondItem="qKv-2x-30g" secondAttribute="leading" id="ulF-IP-hNQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qKv-2x-30g"/>
                     </view>
                     <navigationItem key="navigationItem" id="z2d-F8-P9V"/>
                     <connections>
-                        <outlet property="searchBar" destination="hF6-xF-J5B" id="sSc-Xl-hQA"/>
                         <outlet property="tableView" destination="XGT-B6-WKq" id="yAm-NC-nXR"/>
                     </connections>
                 </viewController>
