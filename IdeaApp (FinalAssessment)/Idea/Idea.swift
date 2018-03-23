@@ -34,6 +34,8 @@ class Idea {
         self.description = dict["description"] as? String ?? ""
         self.imageURL = dict["imageURL"] as? String ?? ""
         self.status = Idea.Status(rawValue: dict["status"] as! String) ?? .notStarted
+        self.likes = dict["numberOfLikes"] as? Int ?? 0
+        self.dislikes = dict["numberOfDislikes"] as? Int ?? 0
     }
     
     enum Status : String {

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class IdeaDetailViewController: UIViewController {
     
@@ -41,9 +43,39 @@ class IdeaDetailViewController: UIViewController {
     
     @IBOutlet weak var statusLabel: UILabel!
     
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var statusTextField: UITextField!
     
-    @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton! {
+        didSet {
+            cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        }
+    }
+    
+    @IBOutlet weak var doneButton: UIButton! {
+        didSet {
+            doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        }
+    }
+    
+    @IBOutlet weak var editImageView: UIImageView! {
+        didSet {
+            editImageView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(editImageViewTapped))
+            editImageView.addGestureRecognizer(tap)
+        }
+    }
+    
+    @IBOutlet weak var likeButton: UIButton! {
+        didSet {
+            likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        }
+    }
+    
+    @IBOutlet weak var dislikeButton: UIButton! {
+        didSet {
+            dislikeButton.addTarget(self, action: #selector(dislikeButtonTapped), for: .touchUpInside)
+        }
+    }
     
     @IBOutlet weak var likesLabel: UILabel!
     
@@ -56,13 +88,107 @@ class IdeaDetailViewController: UIViewController {
     
     var selectedIdea : Idea = Idea()
     
+    var ref : DatabaseReference!
+    
+//    var likesCount : Int = 0
+//
+//    var dislikesCount : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ref = Database.database().reference()
+        
         loadDetails()
         
         let notification = Notification(name: Notification.Name.init("Pass Selected Idea"), object: nil, userInfo: ["Selected Idea" : selectedIdea])
         NotificationCenter.default.post(notification)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        editImageView.isHidden = false
+        statusLabel.isHidden = false
+        statusTextField.isHidden = true
+        doneButton.isHidden = true
+        cancelButton.isHidden = true
+    }
+    
+    @objc func likeButtonTapped() {
+        likeButton.isEnabled = false
+        dislikeButton.isEnabled = true
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            ref.child("users/\(uid)/ideas/\(selectedIdea.ideaID)").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let ideaDict = snapshot.value as? [String : Any],
+                    var likesCount = ideaDict["numberOfLikes"] as? Int {
+                    likesCount += 1
+                    
+                    let likeDict = ["numberOfLikes" : likesCount]
+                    self.ref.child("users/\(uid)/ideas/\(self.selectedIdea.ideaID)").updateChildValues(likeDict)
+                    
+                    self.likesLabel.text = "\(likesCount) likes"
+                }
+            })
+        }
+    }
+    
+    @objc func dislikeButtonTapped() {
+        dislikeButton.isEnabled = false
+        likeButton.isEnabled = true
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            ref.child("users/\(uid)/ideas/\(selectedIdea.ideaID)").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let ideaDict = snapshot.value as? [String : Any],
+                    var dislikesCount = ideaDict["numberOfDislikes"] as? Int {
+                    dislikesCount += 1
+                    
+                    let dislikeDict = ["numberOfDislikes" : dislikesCount]
+                    self.ref.child("users/\(uid)/ideas/\(self.selectedIdea.ideaID)").updateChildValues(dislikeDict)
+                    
+                    self.dislikesLabel.text = "\(dislikesCount) dislikes"
+                }
+            })
+        }
+    }
+    
+    @objc func cancelButtonTapped() {
+        editImageView.isHidden = false
+        statusLabel.isHidden = false
+        statusTextField.isHidden = true
+        doneButton.isHidden = true
+        cancelButton.isHidden = true
+    }
+    
+    @objc func doneButtonTapped() {
+        editImageView.isHidden = false
+        statusLabel.isHidden = false
+        statusTextField.isHidden = true
+        doneButton.isHidden = true
+        cancelButton.isHidden = true
+        
+        guard let newStatus = statusTextField.text else {return}
+        if statusLabel.text != statusTextField.text {
+            showAlert(withTitle: "Status Change Successful", message: "Current status changed to: \(newStatus)")
+        }
+        statusLabel.text = newStatus
+        
+        if let uid = Auth.auth().currentUser?.uid {
+        ref.child("users/\(uid)/ideas/\(selectedIdea.ideaID)").updateChildValues(["status" : newStatus])
+        
+        ref.child("ideas/\(selectedIdea.ideaID)/").updateChildValues(["status" : newStatus])
+            
+        }
+    }
+    
+    @objc func editImageViewTapped() {
+        editImageView.isHidden = true
+        statusLabel.isHidden = true
+        statusTextField.isHidden = false
+        doneButton.isHidden = false
+        cancelButton.isHidden = false
+        statusTextField.text = statusLabel.text
     }
     
     @objc func indexChanged() {

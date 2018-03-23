@@ -50,7 +50,14 @@ class IdeaViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationItem.title = "Ideas"
         
-        observeIdeas()        
+        observeIdeas()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        ideas = []
+//        observeIdeas()
+        tableView.reloadData()
     }
     
     func observeIdeas() {
@@ -63,12 +70,33 @@ class IdeaViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.ideas.append(idea)
                     self.filteredIdeas.append(idea)
-                    let indexPath = IndexPath(row: self.ideas.count - 1, section: 0)
-                    self.tableView.insertRows(at: [indexPath], with: .automatic)
+//                    let indexPath = IndexPath(row: self.ideas.count - 1, section: 0)
+//                    self.tableView.insertRows(at: [indexPath], with: .automatic)
                     self.tableView.reloadData()
                 }
                 
             })
+            
+            ref.child("users/\(uid)/ideas").observe(.childChanged, with: { (snapshot) in
+                guard let ideaDict = snapshot.value as? [String : Any] else {return}
+
+                for (index, idea) in self.ideas.enumerated() {
+                    if idea.ideaID == snapshot.key {
+
+                        DispatchQueue.main.async {
+                            let idea = Idea(ideaID: snapshot.key, dict: ideaDict)
+                            self.ideas[index] = idea
+//                            let indexPath = IndexPath(row: self.ideas.count - 1, section: 0)
+//                            self.tableView.insertRows(at: [indexPath], with: .automatic)
+                            self.tableView.reloadData()
+                            return
+                        }
+
+                    }
+                }
+
+            })
+            
         }
         
         
